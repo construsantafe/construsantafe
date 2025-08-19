@@ -1,0 +1,123 @@
+🏗️ BIO ULTRADETALLADA – Proyecto “Obra Total”
+🧱 VISIÓN GENERAL
+Obra Total es una empresa especializada en construcción, electricidad y remodelaciones, orientada al cliente particular que busca soluciones confiables y profesionales para obras de pequeña y mediana escala.
+El objetivo es ofrecer servicios integrales, de alta calidad, con una identidad visual sólida y presencia digital que permita captar clientes desde redes sociales y vía presencial (panfletos impresos).
+
+🌐 PRESENCIA DIGITAL
+🖥️ Sitio Web Profesional (React + Tailwind)
+Construido desde cero con ReactJS y Tailwind CSS.
+
+Estructura modular optimizada para escalar y adaptar servicios.
+
+Hosting local en modo desarrollo (localhost:5173) con opción a deploy en plataformas como Netlify, Vercel o GitHub Pages.
+
+Carpeta public/images contiene imágenes organizadas por servicios.
+
+Secciones principales:
+Inicio: Logo, eslogan, botón de contacto.
+
+Servicios: Tarjetas visuales con "Ver más" que despliegan la descripción profesional de cada servicio.
+
+Galería: Imágenes reales de trabajos hechos (por ahora placeholder, pero se preparó la estructura para galería real).
+
+Contacto: Botón flotante de WhatsApp que lleva al contacto directo.
+
+🧰 SERVICIOS INCLUIDOS (Actualizados en el Frontend)
+Cada uno cuenta con:
+
+Imagen representativa
+
+Título
+
+Lista detallada de tareas específicas
+
+Descripción expandible por botón “Ver más”
+
+1. 🧱 Albañilería
+Revoques: Fino, grueso e impermeable
+
+Paredes de 15 y 30: Ladrillos comunes, huecos, block, retac, vistos
+
+Colocación de aberturas
+
+2. ⚡ Electricidad
+Instalaciones eléctricas domiciliarias
+
+Reparaciones, mantenimiento e imprevistos
+
+Diseño seguro y normativo
+
+3. 🎨 Pintura
+Interior y exterior
+
+Enduido
+
+Reparación de rajaduras y filtraciones
+
+4. 🪵 Durlock y Cielorrasos
+Cielorrasos de durlock y PVC
+
+Tabiques divisorios y terminaciones finas
+
+5. 🧱 Revestimientos y Pisos
+Porcelanato
+
+Adoquines
+
+Colocación profesional sobre superficie nivelada
+
+6. 🏠 Techos (Nuevo)
+Tirantes a la vista en madera
+
+Perfilería metálica soldada
+
+Impermeabilización y terminación profesional
+
+📸 IMÁGENES Y RECURSOS VISUALES
+Carpeta public/images incluye:
+Iconos propios y descargados (whatsapp, electricidad, pintura, logo, etc.)
+
+Imágenes representativas por servicio
+
+Todos los nombres de imágenes fueron adaptados y normalizados para evitar errores de carga
+
+Bancos de imágenes utilizados / sugeridos:
+Kaboompics
+
+Pexels
+
+Unsplash
+
+Freepik
+
+Pixabay
+
+Flaticon
+
+IconFinder
+
+📃 PANFLETO IMPRESO
+Diseño profesional para ser entregado en la calle.
+
+Contiene: logo, servicios destacados, descripción breve, contacto WhatsApp.
+
+Generado como imagen descargable para imprimir directamente.
+
+🎯 OBJETIVOS A CORTO PLAZO
+✅ Tener un sitio web profesional funcional ✅
+
+✅ Generar panfleto de distribución masiva ✅
+
+✅ Organizar imágenes e identidad visual coherente ✅
+
+🛣️ PRÓXIMOS PASOS RECOMENDADOS
+Agregar sección “Testimonios” o “Clientes satisfechos”
+
+Conectar formulario de contacto (React Hook Form o directamente con WhatsApp)
+
+Optimizar versión responsive (mobile)
+
+Subir sitio a Netlify o Vercel
+
+Publicar QR del sitio web en el panfleto para conexión entre físico y digital
+

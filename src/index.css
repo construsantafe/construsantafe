@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Navegación por anclas con header fijo --- */
+html {
+  scroll-behavior: smooth;
+  /* si algún scroll usa el valor por defecto, esto ya compensa el header */
+  scroll-padding-top: var(--nav-offset, 132px);
+}
+
+/* fallback si algún elemento usa scrollIntoView sin scroll-padding */
+[id] { scroll-margin-top: var(--nav-offset, 132px); }
+

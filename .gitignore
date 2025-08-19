@@ -1,0 +1,12 @@
+﻿# Node / Vite
+node_modules/
+dist/
+.env*
+.vercel/
+.netlify/
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
