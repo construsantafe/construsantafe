@@ -7,9 +7,7 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-[86vh] md:h-[88vh] flex items-center justify-center text-white text-center overflow-hidden scroll-mt-[var(--nav-offset,112px)]"
     >
-      {/* Fondo responsive (AVIF > WebP > JPEG) usando las variantes santafe1-*.{avif,webp} */}
       <picture>
-        {/* AVIF primero */}
         <source
           type="image/avif"
           srcSet={[
@@ -20,7 +18,6 @@ export default function Hero() {
           ].join(", ")}
           sizes="100vw"
         />
-        {/* WebP de respaldo */}
         <source
           type="image/webp"
           srcSet={[
@@ -31,7 +28,6 @@ export default function Hero() {
           ].join(", ")}
           sizes="100vw"
         />
-        {/* JPEG fallback */}
         <img
           src="/images/santafe1.jpg"
           alt="Vista aérea de Santa Fe Capital"
@@ -44,13 +40,9 @@ export default function Hero() {
         />
       </picture>
 
-      {/* Vignette global */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/60" />
-
-      {/* Placa de contraste detrás del contenido */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-4xl h-[58%] md:h-[54%] rounded-[2.5rem] bg-black/18 blur-[22px]" />
 
-      {/* Contenido */}
       <div className="relative z-10 px-5 sm:px-6 max-w-6xl">
         <h1
           className="
@@ -60,7 +52,7 @@ export default function Hero() {
           "
           style={{ textWrap: "balance" }}
         >
-          Construcción, Electricidad y
+          Construcción, Electricidad y{" "}
           <br className="hidden sm:block" />
           remodelaciones en{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-red-500">
@@ -68,14 +60,7 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p
-          className="
-            mx-auto max-w-[60ch]
-            text-[15px] sm:text-base md:text-lg
-            text-white/90 leading-relaxed
-            mb-7 sm:mb-8
-          "
-        >
+        <p className="mx-auto max-w-[60ch] text-[15px] sm:text-base md:text-lg text-white/90 leading-relaxed mb-7 sm:mb-8">
           Más de 10 años garantizando calidad, cumpliendo plazos y ofreciendo
           atención personalizada para tu hogar o comercio.
         </p>
