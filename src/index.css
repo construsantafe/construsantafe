@@ -16,3 +16,37 @@ html {
   Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
 
 html { font-family: var(--font-sans); }
+
+
+/* ====== Fix carrusel Galería (desktop): imagen completa + laterales con blur ====== */
+#galeria .embla { position: relative; }
+#galeria .embla .slide,
+#galeria .embla .slide > div {
+  position: relative;
+}
+
+/* Forzar que la imagen principal NUNCA se recorte */
+#galeria picture,
+#galeria picture > img,
+#galeria img.media-contain,
+#galeria video.media-contain {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+/* Asegurar que el <picture> ocupe el alto del slide */
+#galeria .slide picture { height: 100% !important; }
+
+/* El fondo borroso (si lo usas con otra clase) sí debe cubrir */
+#galeria img.media-cover,
+#galeria .bg-blur {
+  object-fit: cover !important;
+}
+
+/* Evitar herencias raras de max-height/width del preflight */
+#galeria img, #galeria video {
+  max-width: none !important;
+  max-height: none !important;
+}

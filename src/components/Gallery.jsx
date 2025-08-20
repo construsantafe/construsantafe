@@ -16,6 +16,7 @@ function ImgSmart({
   decorative = false,
   sizes = "(max-width: 640px) 100vw, 960px",
   fetchPriority,
+  style,
 }) {
   const webp = canWebpFrom(src) ? toWebp(src) : null;
   return (
@@ -30,6 +31,7 @@ function ImgSmart({
         fetchpriority={fetchPriority}
         sizes={sizes}
         className={className}
+        style={style}
       />
     </picture>
   );
@@ -75,7 +77,15 @@ const MEDIA = [
   { src: "/imagenesreales/revoqueyconstru5.jpg", caption: "Obra — Revoque" },
 ];
 
-const SLIDE_H = "h-[clamp(300px,60vh,720px)]";
+const SLIDE_H = "h-[clamp(320px,60vh,720px)]";
+
+/** Máscara para blur sólo en los laterales (centro transparente). */
+const sideBlurMaskStyle = {
+  WebkitMaskImage:
+    "linear-gradient(to right, black 0%, black 12%, transparent 30%, transparent 70%, black 88%, black 100%)",
+  maskImage:
+    "linear-gradient(to right, black 0%, black 12%, transparent 30%, transparent 70%, black 88%, black 100%)",
+};
 
 export default function Gallery() {
   const prefersReduced =
@@ -96,7 +106,6 @@ export default function Gallery() {
     [autoplay.current]
   );
 
-  // Sólo reseteamos autoplay al cambiar de slide (ya no guardamos índice ni mostramos dots)
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     autoplay.current?.reset();
@@ -140,24 +149,12 @@ export default function Gallery() {
 
   return (
     <section id="galeria" className="py-20 sm:py-24 relative">
-      {/* Anti-regleta solo dentro de la galería */}
+      {/* Reglas locales para asegurar object-contain */}
       <style>{`
-        #galeria [style*="repeating-linear-gradient"],
-        #galeria [style*="repeating-linear-gradient("],
-        #galeria [class*="ticks"],
-        #galeria [class*="regleta"],
-        #galeria [role="slider"],
-        #galeria [role="progressbar"],
-        #galeria input[type="range"],
-        #galeria progress {
-          background: none !important;
-          background-image: none !important;
-          box-shadow: none !important;
-          border-image: none !important;
-          display: none !important;
-          height: 0 !important;
-          overflow: hidden !important;
-        }
+        #galeria .media-contain { object-fit: contain !important; }
+        #galeria .media-cover   { object-fit: cover !important; }
+        #galeria picture, #galeria picture > img { display: block; }
+        #galeria img, #galeria video { max-width: 100%; height: 100%; }
       `}</style>
 
       <div className="max-w-6xl mx-auto px-3 sm:px-4">
@@ -165,7 +162,6 @@ export default function Gallery() {
           Galería de Trabajos
         </h2>
 
-        {/* Carrusel */}
         <div className="relative">
           {/* Flechas */}
           <button
@@ -190,19 +186,23 @@ export default function Gallery() {
                 const video = isVideo(m.src);
                 return (
                   <div key={m.src} className="flex-[0_0_100%]">
-                    <div className={`relative w-full ${SLIDE_H} overflow-hidden`}>
-                      {/* Fondo suave para evitar “gris” duro en laterales */}
+                    <div className={`relative w-full ${SLIDE_H} overflow-hidden isolation-auto`}>
+                      {/* Fondo borroso sólo en laterales */}
                       {!video ? (
-                        <>
+                        <div
+                          className="pointer-events-none absolute inset-0"
+                          style={sideBlurMaskStyle}
+                        >
                           <ImgSmart
                             src={m.src}
                             decorative
-                            className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 brightness-95 opacity-75"
+                            className="absolute inset-0 w-full h-full media-cover blur-2xl scale-110"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/10" />
-                        </>
+                        </div>
                       ) : (
-                        <div className="absolute inset-0 bg-gradient-to-b from-slate-200 via-slate-100 to-slate-200" />
+                        <div className="pointer-events-none absolute inset-0" style={sideBlurMaskStyle}>
+                          <div className="absolute inset-0 bg-gradient-to-b from-slate-200 via-slate-100 to-slate-200 blur-2xl" />
+                        </div>
                       )}
 
                       {/* Media principal */}
@@ -211,7 +211,7 @@ export default function Gallery() {
                           <video
                             src={m.src}
                             poster={m.poster}
-                            className="max-w-full max-h-full object-contain"
+                            className="w-full h-full media-contain rounded-md"
                             muted
                             playsInline
                           />
@@ -221,11 +221,12 @@ export default function Gallery() {
                             alt={m.caption}
                             eager={i === 0}
                             fetchPriority={i === 0 ? "high" : undefined}
-                            className="max-w-full max-h-full object-contain"
+                            className="w-full h-full media-contain rounded-md"
+                            style={{ objectFit: "contain" }}
                           />
                         )}
 
-                        {/* Zoom */}
+                        {/* Click para zoom */}
                         <button
                           onClick={() => openLightbox(i)}
                           className="absolute inset-0 cursor-zoom-in"
@@ -248,8 +249,7 @@ export default function Gallery() {
               })}
             </div>
           </div>
-
-          {/* Nada debajo del carrusel (sin dots, sin indicador, sin máscara) */}
+          {/* Fin carrusel */}
         </div>
       </div>
 
@@ -271,7 +271,7 @@ export default function Gallery() {
                 poster={MEDIA[lightIdx].poster}
                 controls
                 autoPlay
-                className="max-w-full max-h-[90vh] object-contain rounded-lg"
+                className="max-w-full max-h-[90vh] media-contain rounded-lg"
               />
             ) : (
               <picture>
@@ -281,9 +281,10 @@ export default function Gallery() {
                 <img
                   src={MEDIA[lightIdx].src}
                   alt={MEDIA[lightIdx].caption}
-                  className="max-w-full max-h-[90vh] object-contain rounded-lg"
+                  className="max-w-full max-h-[90vh] media-contain rounded-lg"
                   loading="eager"
                   decoding="async"
+                  style={{ objectFit: "contain" }}
                 />
               </picture>
             )}
@@ -296,7 +297,9 @@ export default function Gallery() {
               ✕
             </button>
             <button
-              onClick={() => setLightIdx((i) => (i + MEDIA.length - 1) % MEDIA.length)}
+              onClick={() =>
+                setLightIdx((i) => (i + MEDIA.length - 1) % MEDIA.length)
+              }
               aria-label="Anterior"
               className="absolute left-2 top-1/2 -translate-y-1/2 text-white/95 bg-white/10 hover:bg-white/20 rounded-full px-3 py-2"
             >
