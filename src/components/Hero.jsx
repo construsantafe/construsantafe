@@ -5,13 +5,33 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      // Altura pensada para móvil (más alta) y desktop; “scroll-mt” usa el offset dinámico del header
       className="relative min-h-[86vh] md:h-[88vh] flex items-center justify-center text-white text-center overflow-hidden scroll-mt-[var(--nav-offset,112px)]"
     >
-      {/* Fondo (WebP + fallback) */}
+      {/* Fondo responsive (AVIF > WebP > JPEG) usando las variantes santafe1-*.{avif,webp} */}
       <picture>
-        <source srcSet="/images/santafe1.webp" type="image/webp" />
-        <source srcSet="/images/santafe1.jpg" type="image/jpeg" />
+        {/* AVIF primero */}
+        <source
+          type="image/avif"
+          srcSet={[
+            "/images/santafe1-600.avif 600w",
+            "/images/santafe1-900.avif 900w",
+            "/images/santafe1-1200.avif 1200w",
+            "/images/santafe1-1600.avif 1600w",
+          ].join(", ")}
+          sizes="100vw"
+        />
+        {/* WebP de respaldo */}
+        <source
+          type="image/webp"
+          srcSet={[
+            "/images/santafe1-600.webp 600w",
+            "/images/santafe1-900.webp 900w",
+            "/images/santafe1-1200.webp 1200w",
+            "/images/santafe1-1600.webp 1600w",
+          ].join(", ")}
+          sizes="100vw"
+        />
+        {/* JPEG fallback */}
         <img
           src="/images/santafe1.jpg"
           alt="Vista aérea de Santa Fe Capital"
@@ -19,6 +39,8 @@ export default function Hero() {
           loading="eager"
           fetchPriority="high"
           decoding="async"
+          width="1600"
+          height="900"
         />
       </picture>
 
@@ -38,10 +60,8 @@ export default function Hero() {
           "
           style={{ textWrap: "balance" }}
         >
-          Construcción, Electricidad{" "}
-          y
+          Construcción, Electricidad y
           <br className="hidden sm:block" />
-          {" "}
           remodelaciones en{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-red-500">
             Santa Fe

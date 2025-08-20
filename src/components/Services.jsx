@@ -9,6 +9,46 @@ import {
 } from "react-icons/fa";
 import { HiOutlineChevronDown } from "react-icons/hi";
 
+/**
+ * Construye un <picture> responsive usando variantes -600 y -900 en AVIF/WebP
+ * y deja de fallback el archivo original (jpg/png).
+ */
+function ResponsiveServiceImage({ src, alt }) {
+  // src viene como "/images/archivo.ext"
+  const dot = src.lastIndexOf(".");
+  const base = src.slice(0, dot);
+  const ext = src.slice(dot + 1); // "jpg" | "png" ...
+  const sizes = "(max-width: 640px) 100vw, 600px"; // 1 col en móvil, 2–3 en desktop
+
+  return (
+    <picture>
+      {/* AVIF primero */}
+      <source
+        type="image/avif"
+        srcSet={`${base}-600.avif 600w, ${base}-900.avif 900w`}
+        sizes={sizes}
+      />
+      {/* WebP de respaldo */}
+      <source
+        type="image/webp"
+        srcSet={`${base}-600.webp 600w, ${base}-900.webp 900w`}
+        sizes={sizes}
+      />
+      {/* Fallback al original */}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="w-full aspect-[16/10] object-cover select-none"
+        style={{ contain: "layout paint" }}
+        width={900}
+        height={560}
+      />
+    </picture>
+  );
+}
+
 /** Contenidos: solo “Detalles” al abrir. */
 const services = [
   {
@@ -108,8 +148,8 @@ export default function Services() {
             Nuestros Servicios
           </h2>
           <p className="mt-3 text-slate-600 max-w-3xl mx-auto">
-            Trabajamos obras chicas y medianas para hogares y comercios.
-            Elegí un rubro y abrí los <b>detalles</b> para ver alcances y materiales.
+            Trabajamos obras chicas y medianas para hogares y comercios. Elegí
+            un rubro y abrí los <b>detalles</b> para ver alcances y materiales.
           </p>
         </header>
 
@@ -122,16 +162,9 @@ export default function Services() {
                 key={title}
                 className="group relative isolate rounded-3xl overflow-hidden bg-white ring-1 ring-slate-200 shadow-sm hover:shadow-xl hover:ring-orange-200 transition"
               >
-                {/* Imagen (SIN zoom en hover) */}
+                {/* Imagen optimizada */}
                 <div className="relative overflow-hidden">
-                  <img
-                    src={image}
-                    alt={title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full aspect-[16/10] object-cover select-none"
-                    style={{ contain: "layout paint" }}
-                  />
+                  <ResponsiveServiceImage src={image} alt={title} />
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/15 to-transparent" />
                 </div>
 
@@ -176,7 +209,7 @@ export default function Services() {
                   </div>
                 </div>
 
-                {/* Hoja interna con animación suave sin “salto” */}
+                {/* Hoja interna */}
                 <div
                   id={`sheet-${i}`}
                   role="dialog"
